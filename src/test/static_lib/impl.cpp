@@ -1,7 +1,13 @@
 #include "func.h"
 
 namespace TEST_SL {
-int add(int a, int b){
+template <typename T>
+T add(T a, T b){
     return a + b;
 }
+
+int mul (int a , int b ){
+    return a*b;
+}
+
 }

@@ -1,1 +1,11 @@
-AddTarget(TargetMode.EXE)
+AddTarget(
+    TargetMode.EXE,
+    {
+        _G.WorkspaceDir.."/include/static_lib",
+        _G.WorkspaceDir.."/include/dynamic_lib"
+    },
+    {
+        "static_lib",
+        "dynamic_lib"
+    }
+)

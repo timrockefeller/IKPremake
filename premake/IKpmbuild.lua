@@ -25,6 +25,18 @@ function AddTarget(mode, inc, lib, ...)
         table.insert(_includedirs, v)
     end
 
+    lib = lib or {}
+    local _libdir = {}
+    local _libname = {}
+    for _,v in ipairs(lib) do
+        if string.find(v, "%/") or string.find(v, "%*") then
+            print("", "LibDir:", v)
+            table.insert(_libdir, v)
+        else
+            print("", "LibName:", v)
+            table.insert(_libname, v)
+        end
+    end
 
     print("", "Type: ", _kind)
     --Create project
@@ -38,6 +50,8 @@ function AddTarget(mode, inc, lib, ...)
             "./*.inl"
         }
         includedirs (_includedirs)
+        libdirs (_libdir)
+        links (_libname)
     print ("└────────────────────────────────────────────────┘")
 end
 
