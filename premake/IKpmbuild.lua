@@ -3,27 +3,10 @@ TargetMode.EXE = 1
 TargetMode.STATIC = 2
 TargetMode.DYNAMIC = 3
 
-function AddWorkspace(name)
-    workspace (name) 
-        location "build"
-        language "C++"
-        configurations {"Debug", "Release"}
-        filter {"configurations:Debug"}
-            symbols "On"
-        filter {"configurations:Release"}
-            optimize "On"
-        filter {}
-        targetdir ("build/target/%{prj.name}/%{cfg.longname}")
-        objdir ("build/obj/%{prj.name}/%{cfg.longname}")
-        postbuildcommands {
-            ("{COPY} %{cfg.buildtarget.relpath} \"../bin/\"")
-        }
-end
-
-function AddTarget(mode, ...)
+function AddTarget(mode, inc, lib, ...)
     local _project = path.getbasename(os.getcwd())
     print("┌────────────────────────────────────────────────┐")
-    print("\tProject: " .. _project)
+    print("","Target:", _project)
 
     local _kind = "ConsoleApp"
     if mode == TargetMode.EXE then
@@ -34,15 +17,16 @@ function AddTarget(mode, ...)
         _kind = "SharedLib"
     else
         print ("Error: Unsupported type. ".. os.getcwd())
+        return
     end
 
-    local _includedirs = {}
+    local _includedirs = inc or {}
     for _,v in ipairs(_G.Includes) do
         table.insert(_includedirs, v)
     end
 
 
-    print("\tType: " .. _kind)
+    print("", "Type: ", _kind)
     --Create project
     project (_project)
         kind (_kind)

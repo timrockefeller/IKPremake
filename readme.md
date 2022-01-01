@@ -20,5 +20,17 @@ Automaticaly search every `premake5.lua` and include them in `src` folder.
 To create a target, just type:
 
 ```lua
-AddTarget(TargetMode.EXE)
+AddTarget(
+    TargetMode.EXE, -- | TargetMode.STATIC | TargetMode.DYNAMIC
+    {
+        WorkspaceDir.."path/to/headfiles"
+    },
+    {
+        "libname"
+    }
+)
 ```
+
+## Global Defines
+
+- G.WorkspaceDir: root dir when creating workspace
